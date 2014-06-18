@@ -1,0 +1,58 @@
+---
+title       : How is science and technology around the World?
+subtitle    : Vizualizing World Bank data
+author      : Castro, Dayanne
+job         : 
+framework   : io2012       # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+--- 
+
+## Science and Technology
+
+1. Helps raising living standards
+2. World bank data (http://data.worldbank.org/topic/science-and-technology)
+3. Visualize countries technology base
+
+--- .class #id 
+
+## Using R to subset data
+
+```{r}
+library(reshape2)
+
+research_data <- read.csv("C:/Users/Dayanne/Documents/R/Developing Data Products/Final Project/14_Topic_en_csv_v2.csv", skip = 1)
+      country = 'Brazil'
+      indicator = 'Scientific and technical journal articles'
+      country_data <- research_data[research_data$Country.Name %in% country,]
+      ctry_ind <- country_data[country_data$Indicator.Name == indicator,]
+      cMelt <- melt(ctry_ind, id = c('Country.Name', 'Indicator.Name'), measure.vars = 5:59)
+      cMelt$date <- gsub('X', '', as.character(cMelt$variable))
+      cMelt <- cMelt[!is.na(cMelt$value),]
+ 
+```
+
+--- .class #id 
+
+## New Dataset...
+
+```{r}
+library(rCharts)
+head(cMelt[,c(1,2,4,5)], 3)
+
+```
+Confusing...
+Lots of work...
+
+--- .class #id 
+
+## Visualize data in Real Time
+
+- https://castrodm.shinyapps.io/sci_tech_wbdata/
+
+<img src="https://raw.githubusercontent.com/castrodm/DataProducts_Project/master/Figure1.jpg" />
+
+
