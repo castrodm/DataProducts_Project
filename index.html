@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>How is science and technology around the World?</title>
+  <meta charset="utf-8">
+  <meta name="description" content="How is science and technology around the World?">
+  <meta name="author" content="Castro, Dayanne">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>How is science and technology around the World?</h1>
+    <h2>Vizualizing World Bank data</h2>
+    <p>Castro, Dayanne<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Science and Technology</h2>
+  </hgroup>
+  <article data-timings="">
+    <ol>
+<li>Helps raising living standards</li>
+<li>World bank data (<a href="http://data.worldbank.org/topic/science-and-technology">http://data.worldbank.org/topic/science-and-technology</a>)</li>
+<li>Visualize countries technology base</li>
+</ol>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Using R to subset data</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">library(reshape2)
+
+research_data &lt;- read.csv(&quot;C:/Users/Dayanne/Documents/R/Developing Data Products/Final Project/14_Topic_en_csv_v2.csv&quot;, 
+    skip = 1)
+country = &quot;Brazil&quot;
+indicator = &quot;Scientific and technical journal articles&quot;
+country_data &lt;- research_data[research_data$Country.Name %in% country, ]
+ctry_ind &lt;- country_data[country_data$Indicator.Name == indicator, ]
+cMelt &lt;- melt(ctry_ind, id = c(&quot;Country.Name&quot;, &quot;Indicator.Name&quot;), measure.vars = 5:59)
+cMelt$date &lt;- gsub(&quot;X&quot;, &quot;&quot;, as.character(cMelt$variable))
+cMelt &lt;- cMelt[!is.na(cMelt$value), ]
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>New Dataset...</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">library(rCharts)
+head(cMelt[, c(1, 2, 4, 5)], 3)
+</code></pre>
+
+<pre><code>##    Country.Name                            Indicator.Name value date
+## 22       Brazil Scientific and technical journal articles  1438 1981
+## 26       Brazil Scientific and technical journal articles  1465 1985
+## 27       Brazil Scientific and technical journal articles  1777 1986
+</code></pre>
+
+<p>Confusing...
+Lots of work...</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Visualize data in Real Time</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><a href="https://castrodm.shinyapps.io/sci_tech_wbdata/">https://castrodm.shinyapps.io/sci_tech_wbdata/</a></li>
+</ul>
+
+<p><img src="https://raw.githubusercontent.com/castrodm/DataProducts_Project/master/Figure1.jpg" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Science and Technology'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Using R to subset data'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='New Dataset...'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Visualize data in Real Time'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
